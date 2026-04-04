@@ -34,7 +34,7 @@ def is_timedelta64_series(series: pd.Series) -> bool:
     -------
     is_date: bool
     """
-    return pd.api.types.is_timedelta64_dtype(series)
+    pass
 
 
 def timedelta64_to_float_seconds(series: pd.Series) -> pd.Series:
@@ -49,7 +49,7 @@ def timedelta64_to_float_seconds(series: pd.Series) -> pd.Series:
     -------
     series: pd.Series
     """
-    return series.view(np.int64) / 1_000_000_000
+    pass
 
 
 def date_formatter(time_stamp, ldf):
@@ -75,27 +75,7 @@ def date_formatter(time_stamp, ldf):
     date_str: str
             A reformatted version of the time_stamp according to granularity
     """
-
-    inverted_data_type = lux.config.executor.invert_data_type(ldf.data_type)
-    # TODO: method for data_type_lookup to data_type
-    datetime = pd.to_datetime(time_stamp)
-    if inverted_data_type["temporal"]:
-        # assumes only one temporal column, may need to change this function to recieve multiple temporal columns in the future
-        date_column = ldf[inverted_data_type["temporal"][0]]
-
-    granularity = compute_date_granularity(date_column)
-    date_str = ""
-    if granularity == "year":
-        date_str += str(datetime.year)
-    elif granularity == "month":
-        date_str += str(datetime.year) + "-" + str(datetime.month)
-    elif granularity == "day":
-        date_str += str(datetime.year) + "-" + str(datetime.month) + "-" + str(datetime.day)
-    else:
-        # non supported granularity
-        return datetime.date()
-
-    return date_str
+    pass
 
 
 def compute_date_granularity(date_column: pd.core.series.Series):
@@ -118,15 +98,7 @@ def compute_date_granularity(date_column: pd.core.series.Series):
     field: str
             A str specifying the granularity of dates for the inspected temporal column
     """
-    # supporting a limited set of Vega-Lite TimeUnit (https://vega.github.io/vega-lite/docs/timeunit.html)
-    # corresponding to Pandas timescales
-    date_fields = ["day", "month", "year", "dayofweek"]
-    date_index = pd.DatetimeIndex(date_column)
-    for field in date_fields:
-        # can be changed to sum(getattr(date_index, field)) != 0
-        if hasattr(date_index, field) and len(getattr(date_index, field).unique()) != 1:
-            return field
-    return "year"  # if none, then return year by default
+    pass
 
 
 def is_datetime_series(series: pd.Series) -> bool:
@@ -142,7 +114,7 @@ def is_datetime_series(series: pd.Series) -> bool:
     -------
     is_date: bool
     """
-    return pd.api.types.is_datetime64_any_dtype(series) or pd.api.types.is_period_dtype(series)
+    pass
 
 
 def is_datetime_string(string: str) -> bool:
@@ -157,11 +129,4 @@ def is_datetime_string(string: str) -> bool:
     -------
     is_date: bool
     """
-    from dateutil.parser import parse
-
-    try:
-        parse(string)
-        return True
-
-    except ValueError:
-        return False
+    pass

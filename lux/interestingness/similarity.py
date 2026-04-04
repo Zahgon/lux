@@ -35,42 +35,7 @@ def interpolate(vis, length):
     -------
     None
     """
-    if vis.get_attr_by_channel("x") and vis.get_attr_by_channel("y"):
-
-        xAxis = vis.get_attr_by_channel("x")[0].attribute
-        yAxis = vis.get_attr_by_channel("y")[0].attribute
-
-        if xAxis and yAxis:
-            yVals = vis.data[yAxis]
-            xVals = vis.data[xAxis]
-            n = length
-
-            interpolated_x_vals = [0.0] * (length)
-            interpolated_y_vals = [0.0] * (length)
-
-            granularity = (xVals[len(xVals) - 1] - xVals[0]) / n
-
-            count = 0
-
-            for i in range(0, n):
-                interpolated_x = xVals[0] + i * granularity
-                interpolated_x_vals[i] = interpolated_x
-
-                while xVals[count] < interpolated_x:
-                    if count < len(xVals):
-                        count += 1
-                if xVals[count] == interpolated_x:
-                    interpolated_y_vals[i] = yVals[count]
-                else:
-                    x_diff = xVals[count] - xVals[count - 1]
-                    yDiff = yVals[count] - yVals[count - 1]
-                    interpolated_y_vals[i] = (
-                        yVals[count - 1] + (interpolated_x - xVals[count - 1]) / x_diff * yDiff
-                    )
-            vis.data = pd.DataFrame(
-                list(zip(interpolated_x_vals, interpolated_y_vals)),
-                columns=[xAxis, yAxis],
-            )
+    pass
 
 
 # interpolate dataset
@@ -88,13 +53,7 @@ def normalize(vis):
     -------
     None
     """
-    if vis.get_attr_by_channel("y"):
-        y_axis = vis.get_attr_by_channel("y")[0].attribute
-        max = vis.data[y_axis].max()
-        min = vis.data[y_axis].min()
-        if max == min or (max - min < 1):
-            return
-        vis.data[y_axis] = (vis.data[y_axis] - min) / (max - min)
+    pass
 
 
 def euclidean_dist(query_vis, vis):
@@ -113,20 +72,7 @@ def euclidean_dist(query_vis, vis):
     score : float
         euclidean distance score
     """
-
-    if query_vis.get_attr_by_channel("y") and vis.get_attr_by_channel("y"):
-
-        vis_y_axis = vis.get_attr_by_channel("y")[0].attribute
-        query_y_axis = query_vis.get_attr_by_channel("y")[0].attribute
-
-        vis_vector = vis.data[vis_y_axis].values
-        query_vector = query_vis.data[query_y_axis].values
-        score = np.linalg.norm(vis_vector - query_vector)
-
-        return score
-    else:
-        print("no y axis detected")
-        return 0
+    pass
 
 
 def preprocess(vis):
@@ -141,4 +87,4 @@ def preprocess(vis):
     -------
     None
     """
-    normalize(vis)
+    pass

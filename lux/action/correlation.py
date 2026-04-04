@@ -38,66 +38,8 @@ def correlation(ldf: LuxDataFrame, ignore_transpose: bool = True):
     recommendations : Dict[str,obj]
             object with a collection of visualizations that result from the Correlation action.
     """
-
-    import numpy as np
-
-    filter_specs = utils.get_filter_specs(ldf._intent)
-    intent = [
-        lux.Clause("?", data_model="measure"),
-        lux.Clause("?", data_model="measure"),
-    ]
-    intent.extend(filter_specs)
-    vlist = VisList(intent, ldf)
-    examples = ""
-    if len(vlist) > 1:
-        measures = vlist[0].get_attr_by_data_model("measure")
-        if len(measures) >= 2:
-            examples = f" (e.g., {measures[0].attribute}, {measures[1].attribute})"
-    recommendation = {
-        "action": "Correlation",
-        "description": "Show relationships between two <p class='highlight-descriptor'>quantitative</p> attributes.",
-        "long_description": f"Correlation searches through all pairwise relationship between two quantitative attributes\
-            {examples}. The visualizations are ranked from most to least linearly correlated based on \
-                their Pearson’s correlation score.",
-    }
-    ignore_rec_flag = False
-    # Doesn't make sense to compute correlation if less than 4 data values
-    if len(ldf) < 5:
-        ignore_rec_flag = True
-    # Then use the data populated in the vis list to compute score
-    for vis in vlist:
-        measures = vis.get_attr_by_data_model("measure")
-        if len(measures) < 2:
-            raise ValueError(
-                f"Can not compute correlation between {[x.attribute for x in ldf.columns]} since less than 2 measure values present."
-            )
-        msr1 = measures[0].attribute
-        msr2 = measures[1].attribute
-        if ignore_transpose:
-            check_transpose = check_transpose_not_computed(vlist, msr1, msr2)
-        else:
-            check_transpose = True
-        if check_transpose:
-            vis.score = interestingness(vis, ldf)
-        else:
-            vis.score = -1
-    if ignore_rec_flag:
-        recommendation["collection"] = []
-        return recommendation
-    vlist.sort()
-    vlist = vlist.showK()
-    recommendation["collection"] = vlist
-    return recommendation
+    pass
 
 
 def check_transpose_not_computed(vlist: VisList, a: str, b: str):
-    transpose_exist = list(
-        filter(
-            lambda x: (x._inferred_intent[0].attribute == b) and (x._inferred_intent[1].attribute == a),
-            vlist,
-        )
-    )
-    if len(transpose_exist) > 0:
-        return transpose_exist[0].score == -1
-    else:
-        return False
+    pass

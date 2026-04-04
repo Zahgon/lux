@@ -45,33 +45,16 @@ class MatplotlibChart:
         return f"MatplotlibChart <{str(self.vis)}>"
 
     def add_tooltip(self):
-        return NotImplemented
+        pass
 
     def apply_default_config(self):
-        self.code += "import matplotlib.pyplot as plt\n"
-        self.code += """plt.rcParams.update(
-            {
-                "axes.titlesize": 20,
-                "axes.titleweight": "bold",
-                "axes.labelweight": "bold",
-                "axes.labelsize": 16,
-                "legend.fontsize": 14,
-                "legend.title_fontsize": 15,
-                "xtick.labelsize": 13,
-                "ytick.labelsize": 13,
-            }
-        )\n"""
+        pass
 
     def encode_color(self):
-        return NotImplemented
+        pass
 
     def add_title(self):
-        chart_title = self.vis.title
-        if chart_title:
-            if len(chart_title) > 25:
-                chart_title = chart_title[:15] + "..." + chart_title[-10:]
-            self.ax.set_title(chart_title)
-            self.code += f"ax.set_title('{chart_title}')\n"
+        pass
 
     def initialize_chart(self):
-        return NotImplemented
+        pass

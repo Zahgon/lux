@@ -18,21 +18,10 @@ class Message:
         self.messages = []
 
     def add_unique(self, item, priority=-1):
-        msg = {"text": item, "priority": priority}
-        if msg not in self.messages:
-            self.messages.append(msg)
+        pass
 
     def add(self, item, priority=-1):
-        self.messages.append({"text": item, "priority": priority})
+        pass
 
     def to_html(self):
-        if len(self.messages) == 0:
-            return ""
-        else:
-            sorted_msgs = sorted(self.messages, key=lambda i: i["priority"], reverse=True)
-            html = "<ul>"
-            for msg in sorted_msgs:
-                msgTxt = msg["text"]
-                html += f"<li>{msgTxt}</li>"
-            html += "</ul>"
-            return html
+        pass

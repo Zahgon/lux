@@ -45,11 +45,11 @@ class VisList:
 
     @property
     def intent(self):
-        return self._intent
+        pass
 
     @intent.setter
     def intent(self, intent: List[Clause]) -> None:
-        self.set_intent(intent)
+        pass
 
     def set_intent(self, intent: List[Clause]) -> None:
         """
@@ -59,8 +59,7 @@ class VisList:
         intent : List[Clause]
                 Query specifying the desired VisList
         """
-        self._intent = intent
-        self.refresh_source(self._source)
+        pass
 
     @property
     def exported(self):
@@ -78,40 +77,19 @@ class VisList:
         VisList
                 return a VisList of selected visualizations. -> VisList(v1, v2...)
         """
-        if not hasattr(self, "widget"):
-            warnings.warn(
-                "\nNo widget attached to the VisList."
-                "Please assign VisList to an output variable.\n"
-                "See more: https://lux-api.readthedocs.io/en/latest/source/guide/FAQ.html#troubleshooting-tips",
-                stacklevel=2,
-            )
-            return []
-        exported_vis_lst = self._widget._selectedVisIdxs
-        if exported_vis_lst == {}:
-            warnings.warn(
-                "\nNo visualization selected to export.\n"
-                "See more: https://lux-api.readthedocs.io/en/latest/source/guide/FAQ.html#troubleshooting-tips",
-                stacklevel=2,
-            )
-            return []
-        else:
-            exported_vis = VisList(list(map(self.__getitem__, exported_vis_lst["Vis List"])))
-            return exported_vis
+        pass
 
     def remove_duplicates(self) -> None:
         """
         Removes duplicate visualizations in VisList
         """
-        self._collection = list(set(self._collection))
+        pass
 
     def remove_index(self, index):
-        self._collection.pop(index)
+        pass
 
     def _is_vis_input(self):
-        if type(self._input_lst[0]) == Vis:
-            return True
-        elif type(self._input_lst[0]) == Clause:
-            return False
+        pass
 
     def __getitem__(self, key):
         return self._collection[key]
@@ -215,71 +193,27 @@ class VisList:
 
     def map(self, function):
         # generalized way of applying a function to each element
-        return map(function, self._collection)
+        pass
 
     def get(self, field_name):
         # Get the value of the field for all objects in the collection
-        def get_field(d_obj):
-            field_val = getattr(d_obj, field_name)
-            # Might want to write catch error if key not in field
-            return field_val
-
-        return self.map(get_field)
+        pass
 
     def set(self, field_name, field_val):
-        return NotImplemented
+        pass
 
     def sort(self, remove_invalid=True, descending=True):
         # remove the items that have invalid (-1) score
-        if remove_invalid:
-            self._collection = list(filter(lambda x: x.score != -1, self._collection))
-        if lux.config.sort == "none":
-            return
-        elif lux.config.sort == "ascending":
-            descending = False
-        elif lux.config.sort == "descending":
-            descending = True
-        # sort in-place by “score” by default if available, otherwise user-specified field to sort by
-        self._collection.sort(key=lambda x: x.score, reverse=descending)
+        pass
 
     def showK(self):
-        k = lux.config.topk
-        if k == False:
-            return self
-        elif isinstance(k, int):
-            k = abs(k)
-            return VisList(self._collection[:k])
+        pass
 
     def normalize_score(self, invert_order=False):
-        max_score = max(list(self.get("score")))
-        for dobj in self._collection:
-            dobj.score = dobj.score / max_score
-            if invert_order:
-                dobj.score = 1 - dobj.score
+        pass
 
     def _ipython_display_(self):
-        self._widget = None
-        from IPython.display import display
-        from lux.core.frame import LuxDataFrame
-
-        recommendation = {
-            "action": "Vis List",
-            "description": "Shows a vis list defined by the intent",
-        }
-        recommendation["collection"] = self._collection
-
-        check_import_lux_widget()
-        import luxwidget
-
-        recJSON = LuxDataFrame.rec_to_JSON([recommendation])
-        self._widget = luxwidget.LuxWidget(
-            currentVis={},
-            recommendations=recJSON,
-            intent="",
-            message="",
-            config={"plottingScale": lux.config.plotting_scale},
-        )
-        display(self._widget)
+        pass
 
     def refresh_source(self, ldf):
         """
@@ -301,36 +235,4 @@ class VisList:
         ----
         Function derives a new _inferred_intent by instantiating the intent specification on the new data
         """
-        if ldf is not None:
-            from lux.processor.Parser import Parser
-            from lux.processor.Validator import Validator
-            from lux.processor.Compiler import Compiler
-
-            self._source = ldf
-            self._source.maintain_metadata()
-            if len(self._input_lst) > 0:
-                approx = False
-                if self._is_vis_input():
-                    compiled_collection = []
-                    for vis in self._collection:
-                        vis._inferred_intent = Parser.parse(vis._intent)
-                        Validator.validate_intent(vis._inferred_intent, ldf)
-                        Compiler.compile_vis(ldf, vis)
-                        compiled_collection.append(vis)
-                    self._collection = compiled_collection
-                else:
-                    self._inferred_intent = Parser.parse(self._intent)
-                    Validator.validate_intent(self._inferred_intent, ldf)
-                    self._collection = Compiler.compile_intent(ldf, self._inferred_intent)
-
-                # Early pruning determination criteria
-                width_criteria = len(self._collection) > (lux.config.topk + 3)
-                length_criteria = len(ldf) > lux.config.early_pruning_sample_start
-                if lux.config.early_pruning and width_criteria and length_criteria:
-                    # print("Apply approx to this VisList")
-                    ldf._message.add_unique(
-                        "Large search space detected: Lux is approximating the interestingness of recommended visualizations.",
-                        priority=1,
-                    )
-                    approx = True
-                lux.config.executor.execute(self._collection, ldf, approx=approx)
+        pass

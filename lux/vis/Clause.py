@@ -94,12 +94,10 @@ class Clause:
         self.exclude = exclude
 
     def get_attr(self):
-        return self.attribute
+        pass
 
     def copy_clause(self):
-        copied_clause = Clause()
-        copied_clause.__dict__ = self.__dict__.copy()  # just a shallow copy
-        return copied_clause
+        pass
 
     def set_aggregation(self, aggregation: typing.Union[str, callable]):
         """
@@ -110,21 +108,10 @@ class Clause:
         ----------
         aggregation : typing.Union[str,callable]
         """
-        self.aggregation = aggregation
-        # If aggregation input is a function (e.g., np.std), get the string name of the function for plotting
-        if hasattr(self.aggregation, "__name__"):
-            self._aggregation_name = self.aggregation.__name__
-        else:
-            self._aggregation_name = self.aggregation
+        pass
 
     def to_string(self):
-        if isinstance(self.attribute, list):
-            clauseStr = "|".join(self.attribute)
-        elif self.value == "":
-            clauseStr = str(self.attribute)
-        else:
-            clauseStr = f"{self.attribute}{self.filter_op}{self.value}"
-        return clauseStr
+        pass
 
     def __repr__(self):
         attributes = []

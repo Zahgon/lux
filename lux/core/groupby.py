@@ -25,49 +25,25 @@ class LuxGroupByMixin:
     ]
 
     def aggregate(self, *args, **kwargs):
-        ret_val = super().aggregate(*args, **kwargs)
-        for attr in self._metadata:
-            ret_val.__dict__[attr] = getattr(self, attr, None)
-        return ret_val
+        pass
 
     def _agg_general(self, *args, **kwargs):
-        ret_val = super()._agg_general(*args, **kwargs)
-        for attr in self._metadata:
-            ret_val.__dict__[attr] = getattr(self, attr, None)
-        return ret_val
+        pass
 
     def _cython_agg_general(self, *args, **kwargs):
-        ret_val = super()._cython_agg_general(*args, **kwargs)
-        for attr in self._metadata:
-            ret_val.__dict__[attr] = getattr(self, attr, None)
-        return ret_val
+        pass
 
     def get_group(self, *args, **kwargs):
-        ret_val = super().get_group(*args, **kwargs)
-        for attr in self._metadata:
-            ret_val.__dict__[attr] = getattr(self, attr, None)
-        ret_val.pre_aggregated = False  # Returned LuxDataFrame isn't pre_aggregated
-        return ret_val
+        pass
 
     def filter(self, *args, **kwargs):
-        ret_val = super().filter(*args, **kwargs)
-        for attr in self._metadata:
-            ret_val.__dict__[attr] = getattr(self, attr, None)
-        ret_val.pre_aggregated = False  # Returned LuxDataFrame isn't pre_aggregated
-        return ret_val
+        pass
 
     def apply(self, *args, **kwargs):
-        ret_val = super().apply(*args, **kwargs)
-        for attr in self._metadata:
-            ret_val.__dict__[attr] = getattr(self, attr, None)
-        ret_val.pre_aggregated = False  # Returned LuxDataFrame isn't pre_aggregated
-        return ret_val
+        pass
 
     def size(self, *args, **kwargs):
-        ret_val = super().size(*args, **kwargs)
-        for attr in self._metadata:
-            ret_val.__dict__[attr] = getattr(self, attr, None)
-        return ret_val
+        pass
 
     def __getitem__(self, *args, **kwargs):
         ret_val = super().__getitem__(*args, **kwargs)

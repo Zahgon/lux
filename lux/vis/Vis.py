@@ -79,27 +79,27 @@ class Vis:
 
     @property
     def data(self):
-        return self._vis_data
+        pass
 
     @property
     def code(self):
-        return self._code
+        pass
 
     @property
     def mark(self):
-        return self._mark
+        pass
 
     @property
     def min_max(self):
-        return self._min_max
+        pass
 
     @property
     def intent(self):
-        return self._intent
+        pass
 
     @intent.setter
     def intent(self, intent: List[Clause]) -> None:
-        self.set_intent(intent)
+        pass
 
     def set_intent(self, intent: List[Clause]) -> None:
         """
@@ -110,74 +110,25 @@ class Vis:
         intent : List[Clause]
                 Query specifying the desired VisList
         """
-        self._intent = intent
-        self.refresh_source(self._source)
+        pass
 
     def _ipython_display_(self):
-        from IPython.display import display
-
-        check_import_lux_widget()
-        import luxwidget
-
-        if self.data is None:
-            raise Exception(
-                "No data is populated in Vis. In order to generate data required for the vis, use the 'refresh_source' function to populate the Vis with a data source (e.g., vis.refresh_source(df))."
-            )
-        else:
-            from lux.core.frame import LuxDataFrame
-
-            widget = luxwidget.LuxWidget(
-                currentVis=LuxDataFrame.current_vis_to_JSON([self]),
-                recommendations=[],
-                intent="",
-                message="",
-                config={"plottingScale": lux.config.plotting_scale},
-            )
-            display(widget)
+        pass
 
     def get_attr_by_attr_name(self, attr_name):
-        return list(filter(lambda x: x.attribute == attr_name, self._inferred_intent))
+        pass
 
     def get_attr_by_channel(self, channel):
-        spec_obj = list(
-            filter(
-                lambda x: x.channel == channel and x.value == "" if hasattr(x, "channel") else False,
-                self._inferred_intent,
-            )
-        )
-        return spec_obj
+        pass
 
     def get_attr_by_data_model(self, dmodel, exclude_record=False):
-        if exclude_record:
-            return list(
-                filter(
-                    lambda x: x.data_model == dmodel and x.value == ""
-                    if x.attribute != "Record" and hasattr(x, "data_model")
-                    else False,
-                    self._inferred_intent,
-                )
-            )
-        else:
-            return list(
-                filter(
-                    lambda x: x.data_model == dmodel and x.value == ""
-                    if hasattr(x, "data_model")
-                    else False,
-                    self._inferred_intent,
-                )
-            )
+        pass
 
     def get_attr_by_data_type(self, dtype):
-        return list(
-            filter(
-                lambda x: x.data_type == dtype and x.value == "" if hasattr(x, "data_type") else False,
-                self._inferred_intent,
-            )
-        )
+        pass
 
     def remove_filter_from_spec(self, value):
-        new_intent = list(filter(lambda x: x.value != value, self._inferred_intent))
-        self.set_intent(new_intent)
+        pass
 
     def remove_column_from_spec(self, attribute, remove_first: bool = False):
         """
@@ -190,35 +141,7 @@ class Vis:
         remove_first : bool, optional
                 Boolean flag to determine whether to remove all instances of the attribute or only one (first) instance, by default False
         """
-        if not remove_first:
-            new_inferred = list(filter(lambda x: x.attribute != attribute, self._inferred_intent))
-            self._inferred_intent = new_inferred
-            self._intent = new_inferred
-        elif remove_first:
-            new_inferred = []
-            skip_check = False
-            for i in range(0, len(self._inferred_intent)):
-                if self._inferred_intent[i].value == "":  # clause is type attribute
-                    column_spec = []
-                    column_names = self._inferred_intent[i].attribute
-                    # if only one variable in a column, columnName results in a string and not a list so
-                    # you need to differentiate the cases
-                    if isinstance(column_names, list):
-                        for column in column_names:
-                            if (column != attribute) or skip_check:
-                                column_spec.append(column)
-                            elif remove_first:
-                                remove_first = True
-                        new_inferred.append(Clause(column_spec))
-                    else:
-                        if column_names != attribute or skip_check:
-                            new_inferred.append(Clause(attribute=column_names))
-                        elif remove_first:
-                            skip_check = True
-                else:
-                    new_inferred.append(self._inferred_intent[i])
-            self._intent = new_inferred
-            self._inferred_intent = new_inferred
+        pass
 
     def to_altair(self, standalone=False) -> str:
         """
@@ -234,35 +157,7 @@ class Vis:
         str
                 String version of the Altair code. Need to print out the string to apply formatting.
         """
-        from lux.vislib.altair.AltairRenderer import AltairRenderer
-
-        renderer = AltairRenderer(output_type="Altair")
-        self._code = renderer.create_vis(self, standalone)
-
-        if lux.config.executor.name == "PandasExecutor":
-            function_code = "def plot_data(source_df, vis):\n"
-            function_code += "\timport altair as alt\n"
-            function_code += "\tvisData = create_chart_data(source_df, vis)\n"
-        else:
-            function_code = "def plot_data(tbl, vis):\n"
-            function_code += "\timport altair as alt\n"
-            function_code += "\tvisData = create_chart_data(tbl, vis)\n"
-
-        vis_code_lines = self._code.split("\n")
-        for i in range(2, len(vis_code_lines) - 1):
-            function_code += "\t" + vis_code_lines[i] + "\n"
-        function_code += "\treturn chart\n#plot_data(your_df, vis) this creates an Altair plot using your source data and vis specification"
-        function_code = function_code.replace("alt.Chart(tbl)", "alt.Chart(visData)")
-
-        if "mark_circle" in function_code:
-            function_code = function_code.replace("plot_data", "plot_scatterplot")
-        elif "mark_bar" in function_code:
-            function_code = function_code.replace("plot_data", "plot_barchart")
-        elif "mark_line" in function_code:
-            function_code = function_code.replace("plot_data", "plot_linechart")
-        elif "mark_rect" in function_code:
-            function_code = function_code.replace("plot_data", "plot_heatmap")
-        return function_code
+        pass
 
     def to_matplotlib(self) -> str:
         """
@@ -273,11 +168,7 @@ class Vis:
         str
                 String version of the Matplotlib code. Need to print out the string to apply formatting.
         """
-        from lux.vislib.matplotlib.MatplotlibRenderer import MatplotlibRenderer
-
-        renderer = MatplotlibRenderer(output_type="matplotlib")
-        self._code = renderer.create_vis(self)
-        return self._code
+        pass
 
     def _to_matplotlib_svg(self) -> str:
         """
@@ -288,11 +179,7 @@ class Vis:
         str
                 String version of the SVG.
         """
-        from lux.vislib.matplotlib.MatplotlibRenderer import MatplotlibRenderer
-
-        renderer = MatplotlibRenderer(output_type="matplotlib_svg")
-        self._code = renderer.create_vis(self)
-        return self._code
+        pass
 
     def to_vegalite(self, prettyOutput=True) -> Union[dict, str]:
         """
@@ -303,18 +190,7 @@ class Vis:
         Union[dict,str]
                 String or Dictionary of the VegaLite JSON specification
         """
-        import json
-        from lux.vislib.altair.AltairRenderer import AltairRenderer
-
-        renderer = AltairRenderer(output_type="VegaLite")
-        self._code = renderer.create_vis(self)
-        if prettyOutput:
-            return (
-                "** Remove this comment -- Copy Text Below to Vega Editor(vega.github.io/editor) to visualize and edit **\n"
-                + json.dumps(self._code, indent=2)
-            )
-        else:
-            return self._code
+        pass
 
     def to_code(self, language="vegalite", **kwargs):
         """
@@ -330,34 +206,7 @@ class Vis:
         spec:
             visualization specification corresponding to the Vis object
         """
-        if language == "vegalite":
-            return self.to_vegalite(**kwargs)
-        elif language == "altair":
-            return self.to_altair(**kwargs)
-        elif language == "matplotlib":
-            return self.to_matplotlib()
-        elif language == "matplotlib_svg":
-            return self._to_matplotlib_svg()
-        elif language == "python":
-            lux.config.tracer.start_tracing()
-            lux.config.executor.execute(lux.vis.VisList.VisList(input_lst=[self]), self._source)
-            lux.config.tracer.stop_tracing()
-            self._trace_code = lux.config.tracer.process_executor_code(lux.config.tracer_relevant_lines)
-            lux.config.tracer_relevant_lines = []
-            return self._trace_code
-        elif language == "SQL":
-            if self._query:
-                return self._query
-            else:
-                warnings.warn(
-                    "The data for this Vis was not collected via a SQL database. Use the 'python' parameter to view the code used to generate the data.",
-                    stacklevel=2,
-                )
-        else:
-            warnings.warn(
-                "Unsupported plotting backend. Lux currently only support 'altair', 'vegalite', or 'matplotlib'",
-                stacklevel=2,
-            )
+        pass
 
     def refresh_source(self, ldf):  # -> Vis:
         """
@@ -382,33 +231,8 @@ class Vis:
         ----
         Function derives a new _inferred_intent by instantiating the intent specification on the new data
         """
-        if ldf is not None:
-            from lux.processor.Parser import Parser
-            from lux.processor.Validator import Validator
-            from lux.processor.Compiler import Compiler
-
-            self.check_not_vislist_intent()
-
-            ldf.maintain_metadata()
-            self._source = ldf
-            self._inferred_intent = Parser.parse(self._intent)
-            Validator.validate_intent(self._inferred_intent, ldf)
-
-            Compiler.compile_vis(ldf, self)
-            lux.config.executor.execute([self], ldf)
+        pass
 
     def check_not_vislist_intent(self):
 
-        syntaxMsg = (
-            "The intent that you specified corresponds to more than one visualization. "
-            "Please replace the Vis constructor with VisList to generate a list of visualizations. "
-            "For more information, see: https://lux-api.readthedocs.io/en/latest/source/guide/vis.html#working-with-collections-of-visualization-with-vislist"
-        )
-
-        for i in range(len(self._intent)):
-            clause = self._intent[i]
-            if isinstance(clause, str):
-                if "|" in clause or "?" in clause:
-                    raise TypeError(syntaxMsg)
-            if isinstance(clause, list):
-                raise TypeError(syntaxMsg)
+        pass

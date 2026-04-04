@@ -40,69 +40,52 @@ class Executor:
         """
         Aggregate data points on an axis for bar or line charts
         """
-        return NotImplemented
+        pass
 
     @staticmethod
     def execute_binning(ldf: LuxDataFrame, vis: Vis):
         """
         Binning of data points for generating histograms
         """
-        return NotImplemented
+        pass
 
     @staticmethod
     def execute_filter(vis: Vis):
         """
         Apply a Vis's filter to vis.data
         """
-        return NotImplemented
+        pass
 
     @staticmethod
     def execute_2D_binning(vis: Vis):
         """
         Apply 2D binning (heatmap) to vis.data
         """
-        return NotImplemented
+        pass
 
     @staticmethod
     def compute_stats(self):
-        return NotImplemented
+        pass
 
     @staticmethod
     def compute_data_type(self):
-        return NotImplemented
+        pass
 
     @staticmethod
     def compute_dataset_metadata(self, ldf):
-        return NotImplemented
+        pass
 
     def mapping(self, rmap):
-        group_map = {}
-        if rmap == {}:
-            return {}
-        for val in ["quantitative", "id", "nominal", "temporal", "geographical"]:
-            group_map[val] = list(filter(lambda x: rmap[x] == val, rmap))
-        return group_map
+        pass
 
     def reverseMapping(self, map):
-        reverse_map = {}
-        for valKey in map:
-            for val in map[valKey]:
-                reverse_map[val] = valKey
-        return reverse_map
+        pass
 
     def invert_data_type(self, data_type):
-        return self.mapping(data_type)
+        pass
 
     def compute_data_model(self, data_type):
-        data_type_inverted = self.invert_data_type(data_type)
-        data_model = {
-            "measure": data_type_inverted["quantitative"],
-            "dimension": data_type_inverted["nominal"]
-            + data_type_inverted["temporal"]
-            + data_type_inverted["id"]
-            + data_type_inverted["geographical"],
-        }
-        return data_model
+        pass
 
     def compute_data_model_lookup(self, data_type):
-        return self.reverseMapping(self.compute_data_model(data_type))
+        pass

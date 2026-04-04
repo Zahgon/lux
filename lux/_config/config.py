@@ -59,7 +59,7 @@ class Config:
 
     @property
     def number_of_bars(self):
-        return self._number_of_bars
+        pass
 
     @number_of_bars.setter
     def number_of_bars(self, k: int) -> None:
@@ -69,17 +69,11 @@ class Config:
         k : int
             Number of bars in output bar charts; rest are not displayed
         """
-        if type(k) == int:
-            self._number_of_bars = k
-        else:
-            warnings.warn(
-                "The number of bars must be an integer.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def label_len(self):
-        return self._label_len
+        pass
 
     @label_len.setter
     def label_len(self, l: int) -> None:
@@ -89,17 +83,11 @@ class Config:
         l : int
             Maximum length of string axis labels
         """
-        if type(l) == int:
-            self._label_len = l
-        else:
-            warnings.warn(
-                "The maximum length must be an integer.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def topk(self):
-        return self._topk
+        pass
 
     @topk.setter
     def topk(self, k: Union[int, bool]):
@@ -112,17 +100,11 @@ class Config:
             False: if display all visualizations (no top-k)
             k: number of visualizations to display
         """
-        if isinstance(k, int) or isinstance(k, bool):
-            self._topk = k
-        else:
-            warnings.warn(
-                "Parameter to lux.config.topk must be an integer or a boolean.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def sort(self):
-        return self._sort
+        pass
 
     @sort.setter
     def sort(self, flag: Union[str]):
@@ -135,18 +117,11 @@ class Config:
             "none", "ascending","descending"
             No sorting, sort by ascending order, sort by descending order
         """
-        flag = flag.lower()
-        if isinstance(flag, str) and flag in ["none", "ascending", "descending"]:
-            self._sort = flag
-        else:
-            warnings.warn(
-                "Parameter to lux.config.sort must be one of the following: 'none', 'ascending', or 'descending'.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def pandas_fallback(self):
-        return self._pandas_fallback
+        pass
 
     @pandas_fallback.setter
     def pandas_fallback(self, fallback: bool) -> None:
@@ -156,17 +131,11 @@ class Config:
         fallback : bool
             If an error occurs, whether or not to raise an exception or fallback to default Pandas.
         """
-        if type(fallback) == bool:
-            self._pandas_fallback = fallback
-        else:
-            warnings.warn(
-                "The flag for Pandas fallback must be a boolean.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def interestingness_fallback(self):
-        return self._interestingness_fallback
+        pass
 
     @interestingness_fallback.setter
     def interestingness_fallback(self, fallback: bool) -> None:
@@ -177,13 +146,7 @@ class Config:
             If an error occurs while calculating interestingness, whether or not
             to raise an exception or fallback to default Pandas.
         """
-        if type(fallback) == bool:
-            self._interestingness_fallback = fallback
-        else:
-            warnings.warn(
-                "The flag for interestingness fallback must be a boolean.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def sampling_cap(self):
@@ -193,7 +156,7 @@ class Config:
         sample_number : int
             Cap on the number of rows to sample. Must be larger than _sampling_start
         """
-        return self._sampling_cap
+        pass
 
     @sampling_cap.setter
     def sampling_cap(self, sample_number: int) -> None:
@@ -203,14 +166,7 @@ class Config:
         sample_number : int
             Cap on the number of rows to sample. Must be larger than _sampling_start
         """
-        if type(sample_number) == int:
-            assert sample_number >= self._sampling_start
-            self._sampling_cap = sample_number
-        else:
-            warnings.warn(
-                "The cap on the number samples must be an integer.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def sampling_start(self):
@@ -221,7 +177,7 @@ class Config:
             Number of rows required to begin sampling. Must be smaller or equal to _sampling_cap
 
         """
-        return self._sampling_start
+        pass
 
     @sampling_start.setter
     def sampling_start(self, sample_number: int) -> None:
@@ -232,14 +188,7 @@ class Config:
             Number of rows required to begin sampling. Must be smaller or equal to _sampling_cap
 
         """
-        if type(sample_number) == int:
-            assert sample_number <= self._sampling_cap
-            self._sampling_start = sample_number
-        else:
-            warnings.warn(
-                "The sampling starting point must be an integer.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def sampling(self):
@@ -249,7 +198,7 @@ class Config:
         sample_flag : bool
             Whether or not sampling will occur.
         """
-        return self._sampling_flag
+        pass
 
     @sampling.setter
     def sampling(self, sample_flag: bool) -> None:
@@ -259,13 +208,7 @@ class Config:
         sample_flag : bool
             Whether or not sampling will occur.
         """
-        if type(sample_flag) == bool:
-            self._sampling_flag = sample_flag
-        else:
-            warnings.warn(
-                "The flag for sampling must be a boolean.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def heatmap(self):
@@ -275,7 +218,7 @@ class Config:
         heatmap_flag : bool
             Whether or not a heatmap will be used instead of a scatter plot.
         """
-        return self._heatmap_flag
+        pass
 
     @heatmap.setter
     def heatmap(self, heatmap_flag: bool) -> None:
@@ -285,13 +228,7 @@ class Config:
         heatmap_flag : bool
             Whether or not a heatmap will be used instead of a scatter plot.
         """
-        if type(heatmap_flag) == bool:
-            self._heatmap_flag = heatmap_flag
-        else:
-            warnings.warn(
-                "The flag for enabling/disabling heatmaps must be a boolean.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def default_display(self):
@@ -302,7 +239,7 @@ class Config:
         type : str
             Default display type, can take either the string `lux` or `pandas` (regardless of capitalization)
         """
-        return self._default_display
+        pass
 
     @default_display.setter
     def default_display(self, type: str) -> None:
@@ -313,19 +250,11 @@ class Config:
         type : str
             Default display type, can take either the string `lux` or `pandas` (regardless of capitalization)
         """
-        if type.lower() == "lux":
-            self._default_display = "lux"
-        elif type.lower() == "pandas":
-            self._default_display = "pandas"
-        else:
-            warnings.warn(
-                "Unsupported display type. Default display option should either be `lux` or `pandas`.",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def plotting_backend(self):
-        return self._plotting_backend
+        pass
 
     @plotting_backend.setter
     def plotting_backend(self, type: str) -> None:
@@ -336,19 +265,11 @@ class Config:
         type : str
                 Default display type, can take either the string `vegalite` or `matplotlib` (regardless of capitalization)
         """
-        if type.lower() == "vegalite" or type.lower() == "altair":
-            self._plotting_backend = "vegalite"
-        elif type.lower() == "matplotlib":
-            self._plotting_backend = "matplotlib_svg"
-        else:
-            warnings.warn(
-                "Unsupported plotting backend. Lux currently only support 'altair', 'vegalite', or 'matplotlib'",
-                stacklevel=2,
-            )
+        pass
 
     @property
     def plotting_scale(self):
-        return self._plotting_scale
+        pass
 
     @plotting_scale.setter
     def plotting_scale(self, scale: float) -> None:
@@ -357,17 +278,10 @@ class Config:
         ----------
         type : float (default = 1.0)
         """
-        scale = float(scale) if isinstance(scale, int) else scale
-        if isinstance(scale, float) and scale > 0:
-            self._plotting_scale = scale
-        else:
-            warnings.warn(
-                "Scaling factor for charts must be a positive float.",
-                stacklevel=2,
-            )
+        pass
 
     def _get_action(self, pat: str, silent: bool = False):
-        return lux.actions[pat]
+        pass
 
     def register_action(
         self,
@@ -390,16 +304,7 @@ class Config:
         args: Any
                 any additional arguments the function may require
         """
-        if action:
-            if not callable(action):
-                raise ValueError("Action must be a callable")
-        if display_condition:
-            if not callable(display_condition):
-                raise ValueError("Display condition must be a callable")
-        self.actions[name] = RegisteredOption(
-            name=name, action=action, display_condition=display_condition, args=args
-        )
-        self.update_actions["flag"] = True
+        pass
 
     def remove_action(self, name: str = "") -> None:
         """
@@ -410,11 +315,7 @@ class Config:
         name : str
                 the name of the action to remove
         """
-        if name not in self.actions:
-            raise ValueError(f"Option '{name}' has not been registered")
-
-        del self.actions[name]
-        self.update_actions["flag"] = True
+        pass
 
     def set_SQL_connection(self, connection):
         """
@@ -424,39 +325,14 @@ class Config:
             connection : SQLAlchemy connectable, str, or sqlite3 connection
                 For more information, `see here <https://docs.sqlalchemy.org/en/13/core/connections.html>`__
         """
-        self.set_executor_type("SQL")
-        self.SQLconnection = connection
+        pass
 
     def read_query_template(self, query_template):
-        from lux.executor.SQLExecutor import SQLExecutor
-
-        query_dict = {}
-        if type(query_template) is str:
-            for line in query_template.split("\n"):
-                (key, val) = line.split(":")
-                query_dict[key] = val.strip()
-        else:
-            with open(query_file) as f:
-                for line in f:
-                    (key, val) = line.split(":")
-                    query_dict[key] = val.strip()
-        self.query_templates = query_dict
-        self.executor = SQLExecutor()
+        pass
 
     def set_executor_type(self, exe):
-        if exe == "SQL":
-            from lux.executor.SQLExecutor import SQLExecutor
-
-            self.executor = SQLExecutor()
-            self.read_query_template(postgres_template)
-        elif exe == "Pandas":
-            from lux.executor.PandasExecutor import PandasExecutor
-
-            self.SQLconnection = ""
-            self.executor = PandasExecutor()
-        else:
-            raise ValueError("Executor type must be either 'Pandas' or 'SQL'")
+        pass
 
 
 def warning_format(message, category, filename, lineno, file=None, line=None):
-    return "%s:%s: %s:%s\n" % (filename, lineno, category.__name__, message)
+    pass
